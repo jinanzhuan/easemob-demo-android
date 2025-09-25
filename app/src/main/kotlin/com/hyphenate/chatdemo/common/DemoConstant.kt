@@ -23,4 +23,6 @@ object DemoConstant {
     const val PRESENCE_BUSY = "Busy"
     const val PRESENCE_DO_NOT_DISTURB = "Do Not Disturb"
     const val PRESENCE_AWAY = "Away"
+
+    const val DEMO_STOP_RECORD = "demo_stop_record"
 }

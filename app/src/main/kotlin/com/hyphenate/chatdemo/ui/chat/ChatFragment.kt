@@ -1,6 +1,5 @@
 package com.hyphenate.chatdemo.ui.chat
 
-import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
@@ -24,6 +23,7 @@ import coil.load
 import com.hyphenate.chatdemo.R
 import com.hyphenate.chatdemo.callkit.CallKitManager
 import com.hyphenate.chatdemo.common.DemoConstant
+import com.hyphenate.chatdemo.common.DemoConstant.DEMO_STOP_RECORD
 import com.hyphenate.chatdemo.common.MenuFilterHelper
 import com.hyphenate.chatdemo.common.PresenceCache
 import com.hyphenate.chatdemo.interfaces.IPresenceRequest
@@ -67,6 +67,12 @@ class ChatFragment: UIKitChatFragment() , IPresenceResultView {
                 updatePresence()
             }
         }
+
+        ChatUIKitFlowBus.with<ChatUIKitEvent>(DEMO_STOP_RECORD).register(this) {
+            if (it.isNotifyChange ) {
+                binding?.layoutChat?.stopRecorder()
+            }
+        }
     }
 
     override fun initViewModel() {
@@ -97,9 +103,14 @@ class ChatFragment: UIKitChatFragment() , IPresenceResultView {
 
     private fun showVideoCall() {
         if (chatType == ChatUIKitType.SINGLE_CHAT) {
-            CallKitManager.showSelectDialog(mContext, conversationId)
+            conversationId?.let {
+                CallKitManager.showSelectDialog(mContext, it)
+            }
         } else {
-            CallKitManager.startConferenceCall(mContext, conversationId)
+            conversationId?.let {
+                CallKitManager.startGroupCall(it)
+            }
+
         }
     }
 

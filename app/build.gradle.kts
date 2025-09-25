@@ -1,4 +1,5 @@
 import com.android.build.api.dsl.Ndk
+import com.android.build.api.dsl.Packaging
 import java.util.*
 
 plugins {
@@ -25,10 +26,10 @@ android {
 
     defaultConfig {
         applicationId = "com.hyphenate.chatdemo"
-        minSdk = 21
+        minSdk = 24
         targetSdk = 35
-        versionCode = 142
-        versionName = "4.16.0"
+        versionCode = 144
+        versionName = "4.17.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -133,25 +134,26 @@ android {
         viewBinding = true
         buildConfig = true
     }
-//    compileOptions {
-//        sourceCompatibility = JavaVersion.VERSION_1_8
-//        targetCompatibility = JavaVersion.VERSION_1_8
-//    }
-//    kotlinOptions {
-//        jvmTarget = "1.8"
-//    }
     // Set toolchain version
     kotlin {
         jvmToolchain(17)
     }
 
-    //打开注释后，可以直接在studio里查看和编辑emclient-linux里的代码
+    packaging {
+        jniLibs {
+            pickFirsts.add("lib/x86/libaosl.so")
+            pickFirsts.add("lib/x86_64/libaosl.so")
+            pickFirsts.add("lib/armeabi-v7a/libaosl.so")
+            pickFirsts.add("lib/arm64-v8a/libaosl.so")
+        }
+    }
+
 //    externalNativeBuild {
 //        ndkBuild {
 //            path = File("jni/Android.mk")
 //        }
 //    }
-//    ndkVersion = "19.2.5345600"
+//    ndkVersion = "21.1.6352462"
 }
 
 dependencies {
@@ -164,9 +166,9 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
-    implementation("io.github.scwang90:refresh-layout-kernel:2.1.0")
-    implementation("io.github.scwang90:refresh-header-material:2.1.0")
-    implementation("io.github.scwang90:refresh-header-classics:2.1.0")
+    implementation("io.github.scwang90:refresh-layout-kernel:3.0.0-alpha")
+    implementation("io.github.scwang90:refresh-header-classics:3.0.0-alpha")
+    implementation("io.github.scwang90:refresh-footer-classics:3.0.0-alpha")
     implementation("pub.devrel:easypermissions:3.0.0")
     // lifecycle
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
@@ -215,12 +217,12 @@ dependencies {
     // To use Kotlin Flow and coroutines with Room, must include the room-ktx artifact in build.gradle file.
     implementation("androidx.room:room-ktx:2.5.1")
 
-    implementation("io.hyphenate:ease-chat-kit:4.16.0")
+    implementation("io.hyphenate:ease-chat-kit:4.17.0")
 //    implementation(project(mapOf("path" to ":ease-im-kit")))
 
-    implementation("io.hyphenate:ease-call-kit:4.16.0")
+    implementation("io.hyphenate:chat-call-kit:4.17.0")
 //    implementation(project(mapOf("path" to ":ease-call-kit")))
 
-    implementation("io.hyphenate:hyphenate-chat:4.16.0")
+    implementation("io.hyphenate:hyphenate-chat:4.17.0")
 //    implementation(project(mapOf("path" to ":hyphenatechatsdk")))
 }
