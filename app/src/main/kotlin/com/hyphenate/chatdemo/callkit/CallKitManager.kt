@@ -8,6 +8,7 @@ import com.hyphenate.chatdemo.DemoHelper
 import com.hyphenate.chatdemo.R
 import com.hyphenate.chatdemo.utils.ToastUtils
 import com.hyphenate.callkit.CallKitClient
+import com.hyphenate.callkit.CallKitClient.callKitListener
 import com.hyphenate.callkit.CallKitConfig
 import com.hyphenate.callkit.bean.CallEndReason
 import com.hyphenate.callkit.bean.CallInfo
@@ -17,6 +18,7 @@ import com.hyphenate.callkit.bean.CallType
 import com.hyphenate.callkit.interfaces.CallInfoProvider
 import com.hyphenate.callkit.interfaces.CallKitListener
 import com.hyphenate.callkit.interfaces.OnValueSuccess
+import com.hyphenate.chatdemo.common.DemoConstant.DEMO_STOP_RECORD
 import com.hyphenate.chatdemo.common.extensions.internal.toCallKitUserInfo
 import com.hyphenate.chatdemo.repository.ProfileInfoRepository
 import com.hyphenate.easeui.common.ChatClient
@@ -33,6 +35,7 @@ import com.hyphenate.easeui.model.ChatUIKitMenuItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 object CallKitManager {
 
@@ -70,6 +73,17 @@ object CallKitManager {
                     TAG,
                     "onCallError: errorCode: $errorCode, description: $description, errorType: $errorType "
                 )
+            }
+
+            override fun onReceivedCall(userId: String, callType: CallType, ext: JSONObject?) {
+                super.onReceivedCall(userId, callType, ext)
+
+                //正在语音录音时停止录音
+                ChatUIKitFlowBus.with<ChatUIKitEvent>(DEMO_STOP_RECORD).post(
+                    DemoHelper.getInstance().context.mainScope(),
+                    ChatUIKitEvent(null, ChatUIKitEvent.TYPE.NOTIFY)
+                )
+
             }
         }
     }
