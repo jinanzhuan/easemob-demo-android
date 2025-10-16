@@ -23,6 +23,7 @@ import coil.load
 import com.hyphenate.chatdemo.R
 import com.hyphenate.chatdemo.callkit.CallKitManager
 import com.hyphenate.chatdemo.common.DemoConstant
+import com.hyphenate.chatdemo.common.DemoConstant.DEMO_STOP_RECORD
 import com.hyphenate.chatdemo.common.MenuFilterHelper
 import com.hyphenate.chatdemo.common.PresenceCache
 import com.hyphenate.chatdemo.interfaces.IPresenceRequest
@@ -64,6 +65,12 @@ class ChatFragment: UIKitChatFragment() , IPresenceResultView {
         ChatUIKitFlowBus.with<ChatUIKitEvent>(ChatUIKitEvent.EVENT.UPDATE.name).register(this) {
             if (it.isPresenceChange && it.message.equals(conversationId) ) {
                 updatePresence()
+            }
+        }
+
+        ChatUIKitFlowBus.with<ChatUIKitEvent>(DEMO_STOP_RECORD).register(this) {
+            if (it.isNotifyChange ) {
+                binding?.layoutChat?.stopRecorder()
             }
         }
     }

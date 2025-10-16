@@ -328,8 +328,6 @@
             android:exported="false"/>
         <activity android:name=".ui.group.ChatGroupDetailActivity"
             android:exported="false"/>
-        <activity android:name=".callkit.ConferenceInviteActivity"
-            android:exported="false"/>
         <activity android:name=".ui.me.UserInformationActivity"
             android:exported="false"/>
         <activity android:name=".ui.me.EditUserNicknameActivity"
