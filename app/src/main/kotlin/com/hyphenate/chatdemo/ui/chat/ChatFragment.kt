@@ -1,6 +1,5 @@
 package com.hyphenate.chatdemo.ui.chat
 
-import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
@@ -9,18 +8,22 @@ import android.text.TextUtils
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import coil.load
 import com.hyphenate.chatdemo.R
 import com.hyphenate.chatdemo.callkit.CallKitManager
 import com.hyphenate.chatdemo.common.DemoConstant
+import com.hyphenate.chatdemo.common.DemoConstant.DEMO_STOP_RECORD
 import com.hyphenate.chatdemo.common.MenuFilterHelper
 import com.hyphenate.chatdemo.common.PresenceCache
 import com.hyphenate.chatdemo.interfaces.IPresenceRequest
@@ -36,6 +39,7 @@ import com.hyphenate.easeui.feature.chat.enums.ChatUIKitType
 import com.hyphenate.easeui.feature.chat.widgets.ChatUIKitLayout
 import com.hyphenate.easeui.menu.chat.ChatUIKitChatMenuHelper
 import com.hyphenate.easeui.model.ChatUIKitEvent
+import java.util.Locale
 
 
 class ChatFragment: UIKitChatFragment() , IPresenceResultView {
@@ -61,6 +65,12 @@ class ChatFragment: UIKitChatFragment() , IPresenceResultView {
         ChatUIKitFlowBus.with<ChatUIKitEvent>(ChatUIKitEvent.EVENT.UPDATE.name).register(this) {
             if (it.isPresenceChange && it.message.equals(conversationId) ) {
                 updatePresence()
+            }
+        }
+
+        ChatUIKitFlowBus.with<ChatUIKitEvent>(DEMO_STOP_RECORD).register(this) {
+            if (it.isNotifyChange ) {
+                binding?.layoutChat?.stopRecorder()
             }
         }
     }
@@ -93,9 +103,14 @@ class ChatFragment: UIKitChatFragment() , IPresenceResultView {
 
     private fun showVideoCall() {
         if (chatType == ChatUIKitType.SINGLE_CHAT) {
-            CallKitManager.showSelectDialog(mContext, conversationId)
+            conversationId?.let {
+                CallKitManager.showSelectDialog(mContext, it)
+            }
         } else {
-            CallKitManager.startConferenceCall(mContext, conversationId)
+            conversationId?.let {
+                CallKitManager.startGroupCall(it)
+            }
+
         }
     }
 
@@ -142,6 +157,14 @@ class ChatFragment: UIKitChatFragment() , IPresenceResultView {
 
     override fun fetchChatPresenceSuccess(presence: MutableList<ChatPresence>) {
         updatePresence()
+    }
+
+    /**
+     * 检测当前系统是否为中文
+     */
+    private fun isChineseLanguage(): Boolean {
+        val locale = Locale.getDefault()
+        return locale.language == "zh" || locale.country == "CN" || locale.country == "TW" || locale.country == "HK"
     }
 
     private fun setFraudLayoutInChatFragemntHead() {
@@ -193,5 +216,24 @@ class ChatFragment: UIKitChatFragment() , IPresenceResultView {
             listLayoutParent.post { messageListLayout.setPadding(0,0, 0, 0) }
         }
 
+        // 使用 ImageView 显示用户头像
+        val imageView = ImageView(mContext).apply {
+            scaleType = ImageView.ScaleType.CENTER_CROP
+            // 根据系统语言显示不同图片
+            val backgroundImage = if (isChineseLanguage()) {
+                R.drawable.demo_swindle_bg
+            } else {
+                R.drawable.demo_swindle_bg_en
+            }
+            setImageResource(backgroundImage)
+            layoutParams = FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                gravity = Gravity.CENTER
+            }
+        }
+        //设置反诈背景
+        binding?.layoutChat?.addView(imageView,0)
     }
 }
