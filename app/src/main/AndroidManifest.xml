@@ -117,6 +117,7 @@
         android:theme="@style/Theme.ChatUIKit"
         android:name="com.hyphenate.chatdemo.DemoApplication"
         android:requestLegacyExternalStorage="true"
+        android:pageSizeCompat="enabled"
         tools:targetApi="31">
         <!--Add FileProvider-->
         <provider

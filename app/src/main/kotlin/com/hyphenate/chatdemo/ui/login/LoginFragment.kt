@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.Outline
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.net.http.SslError
 import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
@@ -29,6 +30,7 @@ import android.view.ViewGroup
 import android.view.ViewOutlineProvider
 import android.view.inputmethod.EditorInfo
 import android.webkit.JavascriptInterface
+import android.webkit.SslErrorHandler
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
@@ -62,6 +64,7 @@ import com.hyphenate.chatdemo.viewmodel.LoginFragmentViewModel
 import com.hyphenate.easeui.base.ChatUIKitBaseFragment
 import com.hyphenate.easeui.common.ChatClient
 import com.hyphenate.easeui.common.ChatError
+import com.hyphenate.easeui.common.ChatLog
 import com.hyphenate.easeui.common.bus.ChatUIKitFlowBus
 import com.hyphenate.easeui.common.extensions.catchChatException
 import com.hyphenate.easeui.common.extensions.hideSoftKeyboard
@@ -500,7 +503,16 @@ class LoginFragment : ChatUIKitBaseFragment<DemoFragmentLoginBinding>(), View.On
                 request: WebResourceRequest?,
                 error: WebResourceError?
             ) {
-                handleError(errorInfo = "WEBVIEW_ERROR: ${error?.description}")
+                handleError(errorInfo = "${error?.description}")
+            }
+
+            override fun onReceivedSslError(
+                view: WebView?,
+                handler: SslErrorHandler?,
+                error: SslError?
+            ) {
+                super.onReceivedSslError(view, handler, error)
+                handleError(errorInfo = "${error?.toString()}")
             }
 
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
