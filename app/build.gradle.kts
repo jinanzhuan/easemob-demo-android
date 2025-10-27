@@ -28,8 +28,8 @@ android {
         applicationId = "com.hyphenate.chatdemo"
         minSdk = 24
         targetSdk = 36
-        versionCode = 144
-        versionName = "4.17.0"
+        versionCode = 145
+        versionName = "4.18.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -153,7 +153,7 @@ android {
 //            path = File("jni/Android.mk")
 //        }
 //    }
-//    ndkVersion = "21.1.6352462"
+//    ndkVersion = "29.0.14206865"
 }
 
 dependencies {
@@ -217,12 +217,12 @@ dependencies {
     // To use Kotlin Flow and coroutines with Room, must include the room-ktx artifact in build.gradle file.
     implementation("androidx.room:room-ktx:2.5.1")
 
-    implementation("io.hyphenate:ease-chat-kit:4.17.0")
+    implementation("io.hyphenate:ease-chat-kit:4.18.0")
 //    implementation(project(mapOf("path" to ":ease-im-kit")))
 
-    implementation("io.hyphenate:chat-call-kit:4.17.0")
+    implementation("io.hyphenate:chat-call-kit:4.18.0")
 //    implementation(project(mapOf("path" to ":ease-call-kit")))
 
-    implementation("io.hyphenate:hyphenate-chat:4.17.0")
+    implementation("io.hyphenate:hyphenate-chat:4.18.0")
 //    implementation(project(mapOf("path" to ":hyphenatechatsdk")))
 }
