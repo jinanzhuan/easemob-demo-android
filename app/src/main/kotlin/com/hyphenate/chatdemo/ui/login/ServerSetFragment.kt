@@ -16,7 +16,7 @@ import kotlin.system.exitProcess
 
 class ServerSetFragment: ChatUIKitBaseFragment<DemoFragmentServerSetBinding>() {
 
-    private val changeArray = BooleanArray(4)
+    private val changeArray = BooleanArray(5)
     private var isEnableCustomServer = false
     private var isEnableCustomServerTls = false
     override fun getViewBinding(
@@ -73,6 +73,12 @@ class ServerSetFragment: ChatUIKitBaseFragment<DemoFragmentServerSetBinding>() {
                 changeSaveMenu(s)
             }
         }
+        binding?.etRtcAppid?.addDefaultTextChangedListener {
+            it?.let { s ->
+                changeArray[4] = s.isNotEmpty()
+                changeSaveMenu(s)
+            }
+        }
         binding?.switchSpecifyServer?.setOnCheckedChangeListener { _, isChecked ->
             isEnableCustomServer = isChecked
             makeCustomServerItemEnable(isChecked)
@@ -113,6 +119,11 @@ class ServerSetFragment: ChatUIKitBaseFragment<DemoFragmentServerSetBinding>() {
             binding?.etServerRest?.text?.let {
                 if (it.isNotEmpty()) {
                     DemoHelper.getInstance().getDataModel().setRestServer(it.toString().trim())
+                }
+            }
+            binding?.etRtcAppid?.text?.let {
+                if (it.isNotEmpty()) {
+                    DemoHelper.getInstance().getDataModel().setRtcAppId(it.toString().trim())
                 }
             }
             if (isEnableCustomServer && checkServerSettingChange()) {
@@ -176,6 +187,11 @@ class ServerSetFragment: ChatUIKitBaseFragment<DemoFragmentServerSetBinding>() {
                         binding?.etServerRest?.setText(rest)
                     }
                 }
+                DemoHelper.getInstance().getDataModel().getRtcAppId()?.let { appId ->
+                    if (appId.isEmpty().not()) {
+                        binding?.etRtcAppid?.setText(appId)
+                    }
+                }
             }
         }
         DemoHelper.getInstance().getDataModel().isCustomServerTlsEnable().let { enable ->
@@ -189,6 +205,7 @@ class ServerSetFragment: ChatUIKitBaseFragment<DemoFragmentServerSetBinding>() {
         binding?.etServerAddress?.isEnabled = enable
         binding?.etServerPort?.isEnabled = enable
         binding?.etServerRest?.isEnabled = enable
+        binding?.etRtcAppid?.isEnabled = enable
     }
 
     private fun changeSaveMenu(s: Editable) {

@@ -18,6 +18,8 @@ import com.hyphenate.callkit.bean.CallType
 import com.hyphenate.callkit.interfaces.CallInfoProvider
 import com.hyphenate.callkit.interfaces.CallKitListener
 import com.hyphenate.callkit.interfaces.OnValueSuccess
+import com.hyphenate.callkit.interfaces.RTCConfigProvider
+import com.hyphenate.chat.EMRTCTokenInfo
 import com.hyphenate.chatdemo.common.DemoConstant.DEMO_STOP_RECORD
 import com.hyphenate.chatdemo.common.extensions.internal.toCallKitUserInfo
 import com.hyphenate.chatdemo.repository.ProfileInfoRepository
@@ -32,6 +34,7 @@ import com.hyphenate.easeui.common.extensions.mainScope
 import com.hyphenate.easeui.interfaces.SimpleListSheetItemClickListener
 import com.hyphenate.easeui.model.ChatUIKitEvent
 import com.hyphenate.easeui.model.ChatUIKitMenuItem
+import com.hyphenate.util.EMLog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -124,6 +127,22 @@ object CallKitManager {
 
     } }
 
+    private val rtcConfigProvider by lazy { object : RTCConfigProvider {
+        override fun onSyncGetAppId(): String? {
+            var appID=DemoHelper.getInstance().getDataModel().getRtcAppId()
+            EMLog.d(TAG, "Demohelper rtcConfigProvider: onSyncGetAppId appID=$appID")
+            return appID
+        }
+
+        override fun onAsyncFetchRtcToken(
+            channelName: String?,
+            callback: OnValueSuccess<EMRTCTokenInfo?>
+        ) {
+            EMLog.d(TAG, "Demohelper rtcConfigProvider: onAsyncFetchRtcToken channelName: $channelName")
+            callback(null)
+        }
+    } }
+
     fun init(context: Context) {
         // 初始化CallKit
         val config = CallKitConfig().apply {
@@ -144,6 +163,7 @@ object CallKitManager {
 
         CallKitClient.callKitListener=callKitListener
         CallKitClient.callInfoProvider=callInfoProvider
+        CallKitClient.rtcConfigProvider=rtcConfigProvider
 
 
     }

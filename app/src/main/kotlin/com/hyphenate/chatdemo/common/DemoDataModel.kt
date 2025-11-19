@@ -346,6 +346,22 @@ class DemoDataModel(private val context: Context) {
     }
 
     /**
+     * Set the RTC App ID.
+     * @param appId
+     */
+    fun setRtcAppId(appId: String?) {
+        PreferenceManager.putValue(KEY_RTC_APPID, appId)
+    }
+
+    /**
+     * Get the RTC App ID.
+     * @return
+     */
+    fun getRtcAppId(): String? {
+        return PreferenceManager.getValue(KEY_RTC_APPID, null)
+    }
+
+    /**
      * Set the silent mode for the App.
      */
     fun setAppPushSilent(isSilent: Boolean) {
@@ -379,6 +395,7 @@ class DemoDataModel(private val context: Context) {
         private const val KEY_REST_SERVER = "SHARED_KEY_REST_SERVER"
         private const val KEY_IM_SERVER = "SHARED_KEY_IM_SERVER"
         private const val KEY_IM_SERVER_PORT = "SHARED_KEY_IM_SERVER_PORT"
+        private const val KEY_RTC_APPID = "SHARED_KEY_RTC_APPID"
         private const val KEY_ENABLE_CUSTOM_SERVER = "SHARED_KEY_ENABLE_CUSTOM_SERVER"
         private const val KEY_ENABLE_CUSTOM_SERVER_TLS = "SHARED_KEY_ENABLE_CUSTOM_SERVER_TLS"
         private const val KEY_ENABLE_CUSTOM_SET = "SHARED_KEY_ENABLE_CUSTOM_SET"
