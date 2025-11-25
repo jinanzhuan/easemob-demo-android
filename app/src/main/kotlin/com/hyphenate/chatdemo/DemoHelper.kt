@@ -141,6 +141,16 @@ class DemoHelper private constructor(){
                         if (port != 0) {
                             imPort = port
                         }
+                        // Set WebSocket server and port
+                        dataModel.getWebSocketServer()?.let { wsServer ->
+                            if (wsServer.isNotEmpty()) {
+                                setWebSocketServer(wsServer)
+                            }
+                        }
+                        val wsPort = dataModel.getWebSocketPort()
+                        if (wsPort != 0) {
+                            setWebSocketPort(wsPort)
+                        }
                     }catch (e: Exception){
                         ChatLog.d(TAG, "initChatOptions error: ${e.message}")
                     }

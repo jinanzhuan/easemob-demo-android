@@ -16,7 +16,7 @@ import kotlin.system.exitProcess
 
 class ServerSetFragment: ChatUIKitBaseFragment<DemoFragmentServerSetBinding>() {
 
-    private val changeArray = BooleanArray(4)
+    private val changeArray = BooleanArray(6)
     private var isEnableCustomServer = false
     private var isEnableCustomServerTls = false
     override fun getViewBinding(
@@ -73,6 +73,18 @@ class ServerSetFragment: ChatUIKitBaseFragment<DemoFragmentServerSetBinding>() {
                 changeSaveMenu(s)
             }
         }
+        binding?.etWebsocketServer?.addDefaultTextChangedListener {
+            it?.let { s ->
+                changeArray[4] = s.isNotEmpty()
+                changeSaveMenu(s)
+            }
+        }
+        binding?.etWebsocketPort?.addDefaultTextChangedListener {
+            it?.let { s ->
+                changeArray[5] = s.isNotEmpty()
+                changeSaveMenu(s)
+            }
+        }
         binding?.switchSpecifyServer?.setOnCheckedChangeListener { _, isChecked ->
             isEnableCustomServer = isChecked
             makeCustomServerItemEnable(isChecked)
@@ -113,6 +125,16 @@ class ServerSetFragment: ChatUIKitBaseFragment<DemoFragmentServerSetBinding>() {
             binding?.etServerRest?.text?.let {
                 if (it.isNotEmpty()) {
                     DemoHelper.getInstance().getDataModel().setRestServer(it.toString().trim())
+                }
+            }
+            binding?.etWebsocketServer?.text?.let {
+                if (it.isNotEmpty()) {
+                    DemoHelper.getInstance().getDataModel().setWebSocketServer(it.toString().trim())
+                }
+            }
+            binding?.etWebsocketPort?.text?.let {
+                if (it.isNotEmpty()) {
+                    DemoHelper.getInstance().getDataModel().setWebSocketPort(it.toString().trim().toInt())
                 }
             }
             if (isEnableCustomServer && checkServerSettingChange()) {
@@ -176,6 +198,16 @@ class ServerSetFragment: ChatUIKitBaseFragment<DemoFragmentServerSetBinding>() {
                         binding?.etServerRest?.setText(rest)
                     }
                 }
+                DemoHelper.getInstance().getDataModel().getWebSocketServer()?.let { wsServer ->
+                    if (wsServer.isEmpty().not()) {
+                        binding?.etWebsocketServer?.setText(wsServer)
+                    }
+                }
+                DemoHelper.getInstance().getDataModel().getWebSocketPort().let { wsPort ->
+                    if (wsPort != 0) {
+                        binding?.etWebsocketPort?.setText(wsPort.toString())
+                    }
+                }
             }
         }
         DemoHelper.getInstance().getDataModel().isCustomServerTlsEnable().let { enable ->
@@ -189,6 +221,8 @@ class ServerSetFragment: ChatUIKitBaseFragment<DemoFragmentServerSetBinding>() {
         binding?.etServerAddress?.isEnabled = enable
         binding?.etServerPort?.isEnabled = enable
         binding?.etServerRest?.isEnabled = enable
+        binding?.etWebsocketServer?.isEnabled = enable
+        binding?.etWebsocketPort?.isEnabled = enable
     }
 
     private fun changeSaveMenu(s: Editable) {
