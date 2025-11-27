@@ -35,6 +35,9 @@ import com.hyphenate.easeui.interfaces.SimpleListSheetItemClickListener
 import com.hyphenate.easeui.model.ChatUIKitEvent
 import com.hyphenate.easeui.model.ChatUIKitMenuItem
 import com.hyphenate.util.EMLog
+import io.agora.rtc2.Constants.LOCAL_RPOXY_LOCAL_ONLY
+import io.agora.rtc2.RtcEngine
+import io.agora.rtc2.proxy.LocalAccessPointConfiguration
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -87,6 +90,25 @@ object CallKitManager {
                     ChatUIKitEvent(null, ChatUIKitEvent.TYPE.NOTIFY)
                 )
 
+            }
+
+            override fun onRtcEngineCreated(engine: RtcEngine) {
+                val rtcIp = DemoHelper.getInstance().getDataModel().getRtcIpAddress()
+                val rtcDomain = DemoHelper.getInstance().getDataModel().getRtcVerifyDomain()
+                
+                // Only set local access point if both IP and domain are configured
+                if (!rtcIp.isNullOrEmpty() && !rtcDomain.isNullOrEmpty()) {
+                    val configuration = LocalAccessPointConfiguration().apply {
+                        // Set your private address
+                        ipList = arrayListOf<String>().apply { add(rtcIp) }
+                        verifyDomainName = rtcDomain
+                        mode = LOCAL_RPOXY_LOCAL_ONLY
+                    }
+                    engine.setLocalAccessPoint(configuration)
+                    EMLog.d(TAG, "RTC LocalAccessPoint set: IP=$rtcIp, Domain=$rtcDomain")
+                } else {
+                    EMLog.d(TAG, "RTC LocalAccessPoint not set: IP or Domain is empty")
+                }
             }
         }
     }

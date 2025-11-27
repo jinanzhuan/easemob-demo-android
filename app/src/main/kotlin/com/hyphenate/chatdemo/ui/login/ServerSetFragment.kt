@@ -16,7 +16,7 @@ import kotlin.system.exitProcess
 
 class ServerSetFragment: ChatUIKitBaseFragment<DemoFragmentServerSetBinding>() {
 
-    private val changeArray = BooleanArray(5)
+    private val changeArray = BooleanArray(7)
     private var isEnableCustomServer = false
     private var isEnableCustomServerTls = false
     override fun getViewBinding(
@@ -79,6 +79,18 @@ class ServerSetFragment: ChatUIKitBaseFragment<DemoFragmentServerSetBinding>() {
                 changeSaveMenu(s)
             }
         }
+        binding?.etRtcIp?.addDefaultTextChangedListener {
+            it?.let { s ->
+                changeArray[5] = s.isNotEmpty()
+                changeSaveMenu(s)
+            }
+        }
+        binding?.etRtcDomain?.addDefaultTextChangedListener {
+            it?.let { s ->
+                changeArray[6] = s.isNotEmpty()
+                changeSaveMenu(s)
+            }
+        }
         binding?.switchSpecifyServer?.setOnCheckedChangeListener { _, isChecked ->
             isEnableCustomServer = isChecked
             makeCustomServerItemEnable(isChecked)
@@ -124,6 +136,16 @@ class ServerSetFragment: ChatUIKitBaseFragment<DemoFragmentServerSetBinding>() {
             binding?.etRtcAppid?.text?.let {
                 if (it.isNotEmpty()) {
                     DemoHelper.getInstance().getDataModel().setRtcAppId(it.toString().trim())
+                }
+            }
+            binding?.etRtcIp?.text?.let {
+                if (it.isNotEmpty()) {
+                    DemoHelper.getInstance().getDataModel().setRtcIpAddress(it.toString().trim())
+                }
+            }
+            binding?.etRtcDomain?.text?.let {
+                if (it.isNotEmpty()) {
+                    DemoHelper.getInstance().getDataModel().setRtcVerifyDomain(it.toString().trim())
                 }
             }
             if (isEnableCustomServer && checkServerSettingChange()) {
@@ -192,6 +214,16 @@ class ServerSetFragment: ChatUIKitBaseFragment<DemoFragmentServerSetBinding>() {
                         binding?.etRtcAppid?.setText(appId)
                     }
                 }
+                DemoHelper.getInstance().getDataModel().getRtcIpAddress()?.let { ip ->
+                    if (ip.isEmpty().not()) {
+                        binding?.etRtcIp?.setText(ip)
+                    }
+                }
+                DemoHelper.getInstance().getDataModel().getRtcVerifyDomain()?.let { domain ->
+                    if (domain.isEmpty().not()) {
+                        binding?.etRtcDomain?.setText(domain)
+                    }
+                }
             }
         }
         DemoHelper.getInstance().getDataModel().isCustomServerTlsEnable().let { enable ->
@@ -206,6 +238,8 @@ class ServerSetFragment: ChatUIKitBaseFragment<DemoFragmentServerSetBinding>() {
         binding?.etServerPort?.isEnabled = enable
         binding?.etServerRest?.isEnabled = enable
         binding?.etRtcAppid?.isEnabled = enable
+        binding?.etRtcIp?.isEnabled = enable
+        binding?.etRtcDomain?.isEnabled = enable
     }
 
     private fun changeSaveMenu(s: Editable) {

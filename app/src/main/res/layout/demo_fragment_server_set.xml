@@ -108,10 +108,42 @@
                 style="@style/em_login_et_input"/>
 
             <TextView
-                android:id="@+id/tv_enable_private_tls"
+                android:id="@+id/tv_rtc_private_tip"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/et_rtc_appid"
+                android:layout_marginTop="@dimen/ease_size_12"
+                android:text="@string/server_set_rtc_private_tip"
+                android:textSize="13sp"
+                android:textColor="@color/demo_subtitle"
+                style="@style/em_login_et_input"
+                android:paddingStart="@dimen/ease_size_0"
+                android:layout_height="wrap_content"
+                android:background="@null"/>
+
+            <EditText
+                android:id="@+id/et_rtc_ip"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_rtc_private_tip"
+                android:layout_marginTop="@dimen/ease_size_12"
+                android:hint="RTC IP Address"
+                style="@style/em_login_et_input"/>
+
+            <EditText
+                android:id="@+id/et_rtc_domain"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_rtc_ip"
+                android:layout_marginTop="@dimen/ease_size_12"
+                android:hint="RTC Verify Domain"
+                style="@style/em_login_et_input"/>
+
+            <TextView
+                android:id="@+id/tv_enable_private_tls"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_rtc_domain"
                 android:layout_marginTop="@dimen/ease_size_12"
                 android:text="@string/server_set_enable_tls"
                 style="@style/em_login_et_input"
@@ -126,7 +158,7 @@
                 android:thumb="@drawable/demo_switch_thumb_selector"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_rtc_appid"
+                app:layout_constraintTop_toBottomOf="@id/et_rtc_domain"
                 app:layout_constraintHorizontal_bias="1"
                 android:layout_marginTop="12dp"
                 android:layout_marginRight="40dp"
