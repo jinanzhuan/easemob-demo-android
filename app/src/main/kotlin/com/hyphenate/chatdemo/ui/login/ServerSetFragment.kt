@@ -116,36 +116,50 @@ class ServerSetFragment: ChatUIKitBaseFragment<DemoFragmentServerSetBinding>() {
                         return
                     }
 
+                }else{
+                    DemoHelper.getInstance().getDataModel().setCustomAppKey("")
                 }
             }
             binding?.etServerAddress?.text?.let {
                 if (it.isNotEmpty()) {
                     DemoHelper.getInstance().getDataModel().setIMServer(it.toString().trim())
+                }else{
+                    DemoHelper.getInstance().getDataModel().setIMServer("")
                 }
             }
             binding?.etServerPort?.text?.let {
                 if (it.isNotEmpty()) {
                     DemoHelper.getInstance().getDataModel().setIMServerPort(it.toString().trim().toInt())
+                }else{
+                    DemoHelper.getInstance().getDataModel().setIMServerPort(0)
                 }
             }
             binding?.etServerRest?.text?.let {
                 if (it.isNotEmpty()) {
                     DemoHelper.getInstance().getDataModel().setRestServer(it.toString().trim())
+                }else{
+                    DemoHelper.getInstance().getDataModel().setRestServer("")
                 }
             }
             binding?.etRtcAppid?.text?.let {
                 if (it.isNotEmpty()) {
                     DemoHelper.getInstance().getDataModel().setRtcAppId(it.toString().trim())
+                }else{
+                    DemoHelper.getInstance().getDataModel().setRtcAppId("")
                 }
             }
             binding?.etRtcIp?.text?.let {
                 if (it.isNotEmpty()) {
                     DemoHelper.getInstance().getDataModel().setRtcIpAddress(it.toString().trim())
+                }else{
+                    DemoHelper.getInstance().getDataModel().setRtcIpAddress("")
                 }
             }
             binding?.etRtcDomain?.text?.let {
                 if (it.isNotEmpty()) {
                     DemoHelper.getInstance().getDataModel().setRtcVerifyDomain(it.toString().trim())
+                }else{
+                    DemoHelper.getInstance().getDataModel().setRtcVerifyDomain("")
                 }
             }
             if (isEnableCustomServer && checkServerSettingChange()) {
