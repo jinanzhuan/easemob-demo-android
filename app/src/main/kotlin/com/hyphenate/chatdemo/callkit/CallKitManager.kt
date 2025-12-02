@@ -180,6 +180,8 @@ object CallKitManager {
 
             // 使用绝对路径：
             // ringFile = "/path/to/your/ringtone.mp3"
+
+            disableRTCTokenValidation= !DemoHelper.getInstance().getDataModel().isRtcTokenVerifyEnable()
         }
         CallKitClient.init(context, config)
 

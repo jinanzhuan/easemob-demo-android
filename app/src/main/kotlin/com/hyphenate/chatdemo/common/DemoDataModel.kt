@@ -283,6 +283,14 @@ class DemoDataModel(private val context: Context) {
     }
 
     /**
+     * Get whether the RTC token verify is enabled.
+     * @return
+     */
+    fun isRtcTokenVerifyEnable(): Boolean {
+        return PreferenceManager.getValue(KEY_ENABLE_RTC_TOKEN_VERIFY, true)
+    }
+
+    /**
      * Set whether the custom server is enabled.
      * @param enable
      */
@@ -296,6 +304,14 @@ class DemoDataModel(private val context: Context) {
      */
     fun enableCustomServerTls(enable: Boolean) {
         PreferenceManager.putValue(KEY_ENABLE_CUSTOM_SERVER_TLS, enable)
+    }
+
+    /**
+     * Set whether the RTC token verify is enabled.
+     * @param enable
+     */
+    fun enableRtcTokenVerify(enable: Boolean) {
+        PreferenceManager.putValue(KEY_ENABLE_RTC_TOKEN_VERIFY, enable)
     }
 
     /**
@@ -465,6 +481,7 @@ class DemoDataModel(private val context: Context) {
         private const val KEY_RTC_VERIFY_DOMAIN = "SHARED_KEY_RTC_VERIFY_DOMAIN"
         private const val KEY_ENABLE_CUSTOM_SERVER = "SHARED_KEY_ENABLE_CUSTOM_SERVER"
         private const val KEY_ENABLE_CUSTOM_SERVER_TLS = "SHARED_KEY_ENABLE_CUSTOM_SERVER_TLS"
+        private const val KEY_ENABLE_RTC_TOKEN_VERIFY = "SHARED_KEY_ENABLE_RTC_TOKEN_VERIFY"
         private const val KEY_ENABLE_CUSTOM_SET = "SHARED_KEY_ENABLE_CUSTOM_SET"
         private const val KEY_PUSH_USE_FCM = "shared_key_push_use_fcm"
         private const val KEY_PUSH_APP_SILENT_MODEL = "key_push_app_silent_model"

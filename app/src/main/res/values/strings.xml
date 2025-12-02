@@ -57,6 +57,7 @@
     <string name="server_set_websocket_port">WebSocket Port</string>
     <string name="server_set_rtc_appid">RTC App ID</string>
     <string name="server_set_rtc_private_tip">The following configuration is required only for RTC privatization</string>
+    <string name="enable_rtc_token_verify">Enable RTC token verification:</string>
     <string name="server_set_appkey_empty_hint">Please set an app key</string>
     <string name="server_set_im_server_empty_hint">Set the IM server address</string>
     <string name="server_set_im_port_empty_hint">Set the IM port number</string>

@@ -19,6 +19,9 @@ class ServerSetFragment: ChatUIKitBaseFragment<DemoFragmentServerSetBinding>() {
     private val changeArray = BooleanArray(9)
     private var isEnableCustomServer = false
     private var isEnableCustomServerTls = false
+
+    private var isEnableRtcTokenVerify = false
+
     override fun getViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -111,6 +114,10 @@ class ServerSetFragment: ChatUIKitBaseFragment<DemoFragmentServerSetBinding>() {
         binding?.switchEnablePrivateTls?.setOnCheckedChangeListener { _, isChecked ->
             isEnableCustomServerTls = isChecked
             DemoHelper.getInstance().getDataModel().enableCustomServerTls(isEnableCustomServerTls)
+        }
+        binding?.switchEnableRtcTokenVerify?.setOnCheckedChangeListener { _, isChecked ->
+            isEnableRtcTokenVerify = isChecked
+            DemoHelper.getInstance().getDataModel().enableRtcTokenVerify(isEnableRtcTokenVerify)
         }
     }
 
@@ -279,6 +286,10 @@ class ServerSetFragment: ChatUIKitBaseFragment<DemoFragmentServerSetBinding>() {
         DemoHelper.getInstance().getDataModel().isCustomServerTlsEnable().let { enable ->
             isEnableCustomServerTls = enable
             binding?.switchEnablePrivateTls?.isChecked = enable
+        }
+        DemoHelper.getInstance().getDataModel().isRtcTokenVerifyEnable().let { enable ->
+            isEnableRtcTokenVerify = enable
+            binding?.switchEnableRtcTokenVerify?.isChecked = enable
         }
         makeCustomServerItemEnable(binding?.switchSpecifyServer?.isChecked ?: false)
     }
