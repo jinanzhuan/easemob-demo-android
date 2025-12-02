@@ -374,7 +374,7 @@ class DemoDataModel(private val context: Context) {
      * @return
      */
     fun getRtcAppId(): String? {
-        return PreferenceManager.getValue(KEY_RTC_APPID, null)
+        return PreferenceManager.getValue(KEY_RTC_APPID, "")
     }
 
     /**
