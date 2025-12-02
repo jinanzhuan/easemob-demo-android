@@ -394,6 +394,37 @@ class DemoDataModel(private val context: Context) {
     }
 
     /**
+     * Set the WebSocket server.
+     * @param wsServer
+     */
+    fun setWebSocketServer(wsServer: String?) {
+        PreferenceManager.putValue(KEY_WEBSOCKET_SERVER, wsServer)
+    }
+
+    /**
+     * Get the WebSocket server.
+     * @return
+     */
+    fun getWebSocketServer(): String? {
+        return PreferenceManager.getValue(KEY_WEBSOCKET_SERVER, "")
+    }
+
+    /**
+     * Set the port of the WebSocket server.
+     * @param port
+     */
+    fun setWebSocketPort(port: Int) {
+        PreferenceManager.putValue(KEY_WEBSOCKET_PORT, port)
+    }
+
+    /**
+     * Get the port of the WebSocket server.
+     */
+    fun getWebSocketPort(): Int {
+        return PreferenceManager.getValue(KEY_WEBSOCKET_PORT, 0)
+    }
+
+    /**
      * Set the silent mode for the App.
      */
     fun setAppPushSilent(isSilent: Boolean) {
@@ -427,6 +458,8 @@ class DemoDataModel(private val context: Context) {
         private const val KEY_REST_SERVER = "SHARED_KEY_REST_SERVER"
         private const val KEY_IM_SERVER = "SHARED_KEY_IM_SERVER"
         private const val KEY_IM_SERVER_PORT = "SHARED_KEY_IM_SERVER_PORT"
+        private const val KEY_WEBSOCKET_SERVER = "SHARED_KEY_WEBSOCKET_SERVER"
+        private const val KEY_WEBSOCKET_PORT = "SHARED_KEY_WEBSOCKET_PORT"
         private const val KEY_RTC_APPID = "SHARED_KEY_RTC_APPID"
         private const val KEY_RTC_IP_ADDRESS = "SHARED_KEY_RTC_IP_ADDRESS"
         private const val KEY_RTC_VERIFY_DOMAIN = "SHARED_KEY_RTC_VERIFY_DOMAIN"

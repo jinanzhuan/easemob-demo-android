@@ -51,8 +51,10 @@
     <string name="server_set_specify_server">Use private server:</string>
     <string name="server_set_enable_tls">Enable tls in private server:</string>
     <string name="server_set_server_address">IM server address</string>
-    <string name="server_set_server_port">Port</string>
+    <string name="server_set_server_port">IM Port</string>
     <string name="server_set_rest_server_address">RESTful server address</string>
+    <string name="server_set_websocket_server_address">WebSocket server address</string>
+    <string name="server_set_websocket_port">WebSocket Port</string>
     <string name="server_set_rtc_appid">RTC App ID</string>
     <string name="server_set_rtc_private_tip">The following configuration is required only for RTC privatization</string>
     <string name="server_set_appkey_empty_hint">Please set an app key</string>
