@@ -93,13 +93,13 @@ class ServerSetFragment: ChatUIKitBaseFragment<DemoFragmentServerSetBinding>() {
         }
         binding?.etWebsocketServer?.addDefaultTextChangedListener {
             it?.let { s ->
-                changeArray[4] = s.isNotEmpty()
+                changeArray[7] = s.isNotEmpty()
                 changeSaveMenu(s)
             }
         }
         binding?.etWebsocketPort?.addDefaultTextChangedListener {
             it?.let { s ->
-                changeArray[5] = s.isNotEmpty()
+                changeArray[8] = s.isNotEmpty()
                 changeSaveMenu(s)
             }
         }
@@ -177,11 +177,15 @@ class ServerSetFragment: ChatUIKitBaseFragment<DemoFragmentServerSetBinding>() {
             binding?.etWebsocketServer?.text?.let {
                 if (it.isNotEmpty()) {
                     DemoHelper.getInstance().getDataModel().setWebSocketServer(it.toString().trim())
+                }else{
+                    DemoHelper.getInstance().getDataModel().setWebSocketServer("")
                 }
             }
             binding?.etWebsocketPort?.text?.let {
                 if (it.isNotEmpty()) {
                     DemoHelper.getInstance().getDataModel().setWebSocketPort(it.toString().trim().toInt())
+                }else{
+                    DemoHelper.getInstance().getDataModel().setWebSocketPort(0)
                 }
             }
             if (isEnableCustomServer && checkServerSettingChange()) {
