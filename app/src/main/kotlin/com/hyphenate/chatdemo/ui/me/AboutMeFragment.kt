@@ -52,8 +52,14 @@ class AboutMeFragment: ChatUIKitBaseFragment<DemoFragmentAboutMeBinding>(), View
     private val presenceViewModel by lazy { ViewModelProvider(this)[PresenceViewModel::class.java] }
     private val presenceController by lazy { PresenceController(mContext,presenceViewModel) }
 
+    // 连续点击计数器
+    private var registrationClickCount = 0
+    private var lastRegistrationClickTime = 0L
+
     companion object{
         private val TAG = AboutMeFragment::class.java.simpleName
+        private const val CLICK_INTERVAL = 2000L // 2秒
+        private const val CLICK_COUNT_THRESHOLD = 3 // 点击3次
     }
 
     override fun getViewBinding(
@@ -87,6 +93,7 @@ class AboutMeFragment: ChatUIKitBaseFragment<DemoFragmentAboutMeBinding>(), View
             itemPrivacyPolicy.setOnClickListener(this@AboutMeFragment)
             itemThirdPartyData.setOnClickListener(this@AboutMeFragment)
             itemPersonalDataCollection.setOnClickListener(this@AboutMeFragment)
+            itemRegistrationNumber.setOnClickListener(this@AboutMeFragment)
             itemAbout.setOnClickListener(this@AboutMeFragment)
             aboutMeLogout.setOnClickListener(this@AboutMeFragment)
             aboutMeAccountCancellation.setOnClickListener(this@AboutMeFragment)
@@ -201,6 +208,36 @@ class AboutMeFragment: ChatUIKitBaseFragment<DemoFragmentAboutMeBinding>(), View
         presenceViewModel.fetchPresenceStatus(mutableListOf(ChatClient.getInstance().currentUser))
     }
 
+    /**
+     * 处理备案号的连续点击
+     * 2秒内连续点击3次进入EMActivity
+     */
+    private fun handleRegistrationNumberClick() {
+        val currentTime = System.currentTimeMillis()
+        
+        // 如果距离上次点击超过2秒，重置计数
+        if (currentTime - lastRegistrationClickTime > CLICK_INTERVAL) {
+            registrationClickCount = 0
+        }
+        
+        // 更新最后点击时间
+        lastRegistrationClickTime = currentTime
+        registrationClickCount++
+        
+        ChatLog.d(TAG, "Registration number clicked: $registrationClickCount times")
+        
+        // 如果点击次数达到3次，尝试进入EMActivity
+        if (registrationClickCount >= CLICK_COUNT_THRESHOLD) {
+            registrationClickCount = 0 // 重置计数
+            try {
+                val clazz = Class.forName("com.hyphenate.chatdemo.EMActivity")
+                startActivity(Intent(mContext, clazz))
+            } catch (e: Exception) {
+                ChatLog.e(TAG, "Failed to open EMActivity: ${e.message}")
+            }
+        }
+    }
+
     override fun onPresenceClick(v: View?) {
 
     }
@@ -233,13 +270,11 @@ class AboutMeFragment: ChatUIKitBaseFragment<DemoFragmentAboutMeBinding>(), View
             R.id.item_personal_data_collection -> {
                 WebViewActivity.actionStart(mContext, WebViewLoadType.PersonalDataCollection)
             }
+            R.id.item_registration_number -> {
+                handleRegistrationNumberClick()
+            }
             R.id.item_about -> {
-                var clazz:Class<*>?
-                try {
-                    clazz  = Class.forName("com.hyphenate.chatdemo.EMActivity")
-                }catch (e:Exception){
-                    clazz = Class.forName("com.hyphenate.chatdemo.ui.me.AboutActivity")
-                }
+                val clazz = Class.forName("com.hyphenate.chatdemo.ui.me.AboutActivity")
                 startActivity(Intent(mContext, clazz))
             }
             R.id.about_me_logout -> {
