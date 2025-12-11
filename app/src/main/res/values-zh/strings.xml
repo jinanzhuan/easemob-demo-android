@@ -145,6 +145,11 @@
     <string name="main_about_me_notify_describe">打开后，除群组内被@的消息，将不再接收任何消息推送</string>
 
     <string name="main_about_me_privacy">隐私</string>
+    <string name="main_about_me_privacy_policy">隐私政策</string>
+    <string name="main_about_me_third_party_data">第三方信息数据共享</string>
+    <string name="main_about_me_personal_data_collection">个人数据收集清单</string>
+    <string name="main_about_me_registration_number">备案号</string>
+    <string name="main_about_me_registration_number_content">京ICP备2023000793号-10A</string>
 
     <string name="main_about_me_about">关于</string>
     <string name="about_logo">环信 IM</string>

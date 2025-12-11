@@ -84,6 +84,9 @@ class AboutMeFragment: ChatUIKitBaseFragment<DemoFragmentAboutMeBinding>(), View
             itemCurrency.setOnClickListener(this@AboutMeFragment)
             itemNotify.setOnClickListener(this@AboutMeFragment)
             itemPrivacy.setOnClickListener(this@AboutMeFragment)
+            itemPrivacyPolicy.setOnClickListener(this@AboutMeFragment)
+            itemThirdPartyData.setOnClickListener(this@AboutMeFragment)
+            itemPersonalDataCollection.setOnClickListener(this@AboutMeFragment)
             itemAbout.setOnClickListener(this@AboutMeFragment)
             aboutMeLogout.setOnClickListener(this@AboutMeFragment)
             aboutMeAccountCancellation.setOnClickListener(this@AboutMeFragment)
@@ -220,6 +223,15 @@ class AboutMeFragment: ChatUIKitBaseFragment<DemoFragmentAboutMeBinding>(), View
             }
             R.id.item_privacy -> {
                 startActivity(Intent(mContext, ChatUIKitBlockListActivity::class.java))
+            }
+            R.id.item_privacy_policy -> {
+                WebViewActivity.actionStart(mContext, WebViewLoadType.PrivacyPolicy)
+            }
+            R.id.item_third_party_data -> {
+                WebViewActivity.actionStart(mContext, WebViewLoadType.ThirdPartyDataSharing)
+            }
+            R.id.item_personal_data_collection -> {
+                WebViewActivity.actionStart(mContext, WebViewLoadType.PersonalDataCollection)
             }
             R.id.item_about -> {
                 var clazz:Class<*>?

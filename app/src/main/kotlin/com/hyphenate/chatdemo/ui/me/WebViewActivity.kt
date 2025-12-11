@@ -22,11 +22,26 @@ class WebViewActivity : ChatUIKitBaseActivity<DemoActivityWebviewBinding>() {
         super.onCreate(savedInstanceState)
         if ( intent.hasExtra(LOAD_TYPE) ){
             val type =  WebViewLoadType.from(intent.getIntExtra(LOAD_TYPE,0))
-            url = if (type == WebViewLoadType.LocalHtml){
-                binding.titleBar.setTitle(getString(R.string.about_privacy_policy))
-                "file:///android_asset/privacy_protocol.html"
-            }else{
-                "https://www.easemob.com/"
+            when (type) {
+                WebViewLoadType.LocalHtml -> {
+                    binding.titleBar.setTitle(getString(R.string.about_privacy_policy))
+                    url = "file:///android_asset/privacy_protocol.html"
+                }
+                WebViewLoadType.PrivacyPolicy -> {
+                    binding.titleBar.setTitle(getString(R.string.main_about_me_privacy_policy))
+                    url = "https://www.easemob.com/demo/privacy-policy"
+                }
+                WebViewLoadType.ThirdPartyDataSharing -> {
+                    binding.titleBar.setTitle(getString(R.string.main_about_me_third_party_data))
+                    url = "https://www.easemob.com/demo/third-party-sharing"
+                }
+                WebViewLoadType.PersonalDataCollection -> {
+                    binding.titleBar.setTitle(getString(R.string.main_about_me_personal_data_collection))
+                    url = "https://www.easemob.com/demo/personal-info-collection"
+                }
+                else -> {
+                    url = "https://www.easemob.com/"
+                }
             }
         }
 
@@ -54,7 +69,10 @@ class WebViewActivity : ChatUIKitBaseActivity<DemoActivityWebviewBinding>() {
 
 enum class WebViewLoadType(val value:Int){
     RemoteUrl(0),
-    LocalHtml(1);
+    LocalHtml(1),
+    PrivacyPolicy(2),
+    ThirdPartyDataSharing(3),
+    PersonalDataCollection(4);
 
     companion object {
         fun from(value: Int): WebViewLoadType {
