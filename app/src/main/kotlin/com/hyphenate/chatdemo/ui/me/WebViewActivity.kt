@@ -3,6 +3,7 @@ package com.hyphenate.chatdemo.ui.me
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.webkit.WebViewClient
@@ -37,7 +38,14 @@ class WebViewActivity : ChatUIKitBaseActivity<DemoActivityWebviewBinding>() {
                 }
                 WebViewLoadType.PersonalDataCollection -> {
                     binding.titleBar.setTitle(getString(R.string.main_about_me_personal_data_collection))
-                    url = "https://www.easemob.com/demo/personal-info-collection"
+                    // Load local HTML file with parameters
+                    val username = intent.getStringExtra(PARAM_USERNAME) ?: ""
+                    val phone = intent.getStringExtra(PARAM_PHONE) ?: ""
+                    val device = intent.getStringExtra(PARAM_DEVICE) ?: ""
+                    val avatar = intent.getStringExtra(PARAM_AVATAR) ?: ""
+                    
+                    // Build URL with query parameters
+                    url = "file:///android_asset/person-info.html?username=$username&phone=$phone&device=$device&avatar=$avatar"
                 }
                 else -> {
                     url = "https://www.easemob.com/"
@@ -58,9 +66,32 @@ class WebViewActivity : ChatUIKitBaseActivity<DemoActivityWebviewBinding>() {
 
     companion object {
         private const val LOAD_TYPE = "webView_load_type"
-        fun actionStart(context: Context,type:WebViewLoadType) {
+        private const val PARAM_USERNAME = "param_username"
+        private const val PARAM_PHONE = "param_phone"
+        private const val PARAM_DEVICE = "param_device"
+        private const val PARAM_AVATAR = "param_avatar"
+        
+        fun actionStart(context: Context, type: WebViewLoadType) {
             Intent(context, WebViewActivity::class.java).apply {
                 putExtra(LOAD_TYPE, type.ordinal)
+                context.startActivity(this)
+            }
+        }
+        
+        fun actionStartWithParams(
+            context: Context, 
+            type: WebViewLoadType,
+            username: String = "",
+            phone: String = "",
+            device: String = "",
+            avatar: String = ""
+        ) {
+            Intent(context, WebViewActivity::class.java).apply {
+                putExtra(LOAD_TYPE, type.ordinal)
+                putExtra(PARAM_USERNAME, username)
+                putExtra(PARAM_PHONE, phone)
+                putExtra(PARAM_DEVICE, device)
+                putExtra(PARAM_AVATAR, avatar)
                 context.startActivity(this)
             }
         }

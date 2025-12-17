@@ -4,6 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -268,7 +269,20 @@ class AboutMeFragment: ChatUIKitBaseFragment<DemoFragmentAboutMeBinding>(), View
                 WebViewActivity.actionStart(mContext, WebViewLoadType.ThirdPartyDataSharing)
             }
             R.id.item_personal_data_collection -> {
-                WebViewActivity.actionStart(mContext, WebViewLoadType.PersonalDataCollection)
+                val username = ChatClient.getInstance().currentUser ?: ""
+                val phone = DemoHelper.getInstance().getDataModel().getPhoneNumber()
+                val device = Build.MANUFACTURER + " " + Build.MODEL
+                val avatar = ChatUIKitClient.getCurrentUser()?.avatar ?: ""
+                
+                // Start WebView with parameters
+                WebViewActivity.actionStartWithParams(
+                    mContext, 
+                    WebViewLoadType.PersonalDataCollection,
+                    username = username,
+                    phone = phone,
+                    device = device,
+                    avatar = avatar
+                )
             }
             R.id.item_registration_number -> {
                 handleRegistrationNumberClick()
