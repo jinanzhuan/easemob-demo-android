@@ -50,9 +50,9 @@ class DemoAgreementDialogFragment : DemoDialogFragment() {
             var end2 = 44
             if (isZh) {
                 start1 = 5
-                end1 = 13
-                start2 = 14
-                end2 = 22
+                end1 = 11
+                start2 = 12
+                end2 = 20
             }
             //设置下划线
             //spanStr.setSpan(new UnderlineSpan(), 3, 7, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

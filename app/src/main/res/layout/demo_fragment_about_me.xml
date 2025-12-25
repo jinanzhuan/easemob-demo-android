@@ -124,6 +124,15 @@
             android:layout_height="54dp"/>
 
         <com.hyphenate.easeui.widget.ChatUIKitArrowItemView
+            android:id="@+id/item_terms_of_service"
+            app:layout_constraintTop_toBottomOf="@+id/item_privacy_policy"
+            app:arrowItemTitle="@string/main_about_me_terms_of_service"
+            app:arrowItemAvatarSrc="@drawable/icon_server_rules"
+            style="@style/main_about_me_arrow_item"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"/>
+
+        <com.hyphenate.easeui.widget.ChatUIKitArrowItemView
             android:id="@+id/item_third_party_data"
             app:layout_constraintTop_toBottomOf="@+id/item_privacy_policy"
             app:arrowItemTitle="@string/main_about_me_third_party_data"

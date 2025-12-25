@@ -47,6 +47,10 @@ class WebViewActivity : ChatUIKitBaseActivity<DemoActivityWebviewBinding>() {
                     // Build URL with query parameters
                     url = "file:///android_asset/person-info.html?username=$username&phone=$phone&device=$device&avatar=$avatar"
                 }
+                WebViewLoadType.TermsOfService -> {
+                    binding.titleBar.setTitle(getString(R.string.main_about_me_terms_of_service))
+                    url = "https://www.easemob.com/demo/agreement"
+                }
                 else -> {
                     url = "https://www.easemob.com/"
                 }
@@ -103,7 +107,8 @@ enum class WebViewLoadType(val value:Int){
     LocalHtml(1),
     PrivacyPolicy(2),
     ThirdPartyDataSharing(3),
-    PersonalDataCollection(4);
+    PersonalDataCollection(4),
+    TermsOfService(5);
 
     companion object {
         fun from(value: Int): WebViewLoadType {

@@ -92,6 +92,7 @@ class AboutMeFragment: ChatUIKitBaseFragment<DemoFragmentAboutMeBinding>(), View
             itemNotify.setOnClickListener(this@AboutMeFragment)
             itemPrivacy.setOnClickListener(this@AboutMeFragment)
             itemPrivacyPolicy.setOnClickListener(this@AboutMeFragment)
+            itemTermsOfService.setOnClickListener(this@AboutMeFragment)
             itemThirdPartyData.setOnClickListener(this@AboutMeFragment)
             itemPersonalDataCollection.setOnClickListener(this@AboutMeFragment)
             itemRegistrationNumber.setOnClickListener(this@AboutMeFragment)
@@ -264,6 +265,9 @@ class AboutMeFragment: ChatUIKitBaseFragment<DemoFragmentAboutMeBinding>(), View
             }
             R.id.item_privacy_policy -> {
                 WebViewActivity.actionStart(mContext, WebViewLoadType.PrivacyPolicy)
+            }
+            R.id.item_terms_of_service -> {
+                WebViewActivity.actionStart(mContext, WebViewLoadType.TermsOfService)
             }
             R.id.item_third_party_data -> {
                 WebViewActivity.actionStart(mContext, WebViewLoadType.ThirdPartyDataSharing)

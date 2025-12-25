@@ -146,6 +146,7 @@
 
     <string name="main_about_me_privacy">Privacy</string>
     <string name="main_about_me_privacy_policy">Privacy Policy</string>
+    <string name="main_about_me_terms_of_service">Terms of Service</string>
     <string name="main_about_me_third_party_data">Information Shared with Third Partes</string>
     <string name="main_about_me_personal_data_collection">Personal Information Collected</string>
     <string name="main_about_me_registration_number">Filing Number</string>
