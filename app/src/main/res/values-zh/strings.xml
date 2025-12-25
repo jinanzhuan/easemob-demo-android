@@ -51,8 +51,13 @@
     <string name="server_set_specify_server">使用私有服务器:</string>
     <string name="server_set_enable_tls">在私有服务器中开启tls:</string>
     <string name="server_set_server_address">输入 IM 服务器地址</string>
-    <string name="server_set_server_port">输入端口号</string>
+    <string name="server_set_server_port">输入 IM 端口号</string>
     <string name="server_set_rest_server_address">输入 REST 服务器地址</string>
+    <string name="server_set_websocket_server_address">输入 WebSocket 服务器地址</string>
+    <string name="server_set_websocket_port">输入 WebSocket 端口号</string>
+    <string name="server_set_rtc_appid">RTC App ID</string>
+    <string name="server_set_rtc_private_tip">仅RTC私有化时需要填入以下配置</string>
+    <string name="enable_rtc_token_verify">是否开启RTC Token校验:</string>
     <string name="server_set_appkey_empty_hint">请设置Appkey</string>
     <string name="server_set_im_server_empty_hint">请设置IM服务器地址</string>
     <string name="server_set_im_port_empty_hint">请设置IM端口号</string>
