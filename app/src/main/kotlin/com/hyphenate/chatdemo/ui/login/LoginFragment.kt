@@ -454,9 +454,7 @@ class LoginFragment : ChatUIKitBaseFragment<DemoFragmentLoginBinding>(), View.On
     }
 
     private fun jumpToProtocol() {
-        val uri = Uri.parse("http://www.easemob.com/protocol")
-        val it = Intent(Intent.ACTION_VIEW, uri)
-        startActivity(it)
+        WebViewActivity.actionStart(mContext, WebViewLoadType.PrivacyPolicy)
     }
 
     private fun setupWebView() {

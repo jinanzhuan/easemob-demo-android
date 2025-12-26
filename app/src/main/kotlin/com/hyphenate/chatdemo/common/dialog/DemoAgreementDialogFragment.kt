@@ -17,6 +17,8 @@ import androidx.core.content.ContextCompat
 import com.hyphenate.chatdemo.R
 import com.hyphenate.chatdemo.common.DemoConstant
 import com.hyphenate.chatdemo.common.PreferenceManager
+import com.hyphenate.chatdemo.ui.me.WebViewActivity
+import com.hyphenate.chatdemo.ui.me.WebViewLoadType
 import java.util.Locale
 
 class DemoAgreementDialogFragment : DemoDialogFragment() {
@@ -84,15 +86,11 @@ class DemoAgreementDialogFragment : DemoDialogFragment() {
         }
 
     private fun jumpToAgreement() {
-        val uri = Uri.parse("http://www.easemob.com/agreement")
-        val it = Intent(Intent.ACTION_VIEW, uri)
-        startActivity(it)
+        WebViewActivity.actionStart(requireContext(), WebViewLoadType.TermsOfService)
     }
 
     private fun jumpToProtocol() {
-        val uri = Uri.parse("http://www.easemob.com/protocol")
-        val it = Intent(Intent.ACTION_VIEW, uri)
-        startActivity(it)
+        WebViewActivity.actionStart(requireContext(), WebViewLoadType.PrivacyPolicy)
     }
 
     private abstract inner class MyClickableSpan : ClickableSpan() {
