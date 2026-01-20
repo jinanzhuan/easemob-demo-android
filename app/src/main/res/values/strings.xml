@@ -145,6 +145,12 @@
     <string name="main_about_me_notify_describe">After turning on, you will no longer receive any message notifications except for messages where you are @mentioned in the group.</string>
 
     <string name="main_about_me_privacy">Privacy</string>
+    <string name="main_about_me_privacy_policy">Privacy Policy</string>
+    <string name="main_about_me_terms_of_service">Terms of Service</string>
+    <string name="main_about_me_third_party_data">Information Shared with Third Partes</string>
+    <string name="main_about_me_personal_data_collection">Personal Information Collected</string>
+    <string name="main_about_me_registration_number">Filing Number</string>
+    <string name="main_about_me_registration_number_content">京ICP备2023000793号-10A</string>
     <string name="main_about_upload_log">Debug Log</string>
 
     <string name="main_about_me_about">About</string>
