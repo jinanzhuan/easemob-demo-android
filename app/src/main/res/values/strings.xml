@@ -151,6 +151,7 @@
     <string name="main_about_me_personal_data_collection">Personal Information Collected</string>
     <string name="main_about_me_registration_number">Filing Number</string>
     <string name="main_about_me_registration_number_content">京ICP备2023000793号-10A</string>
+    <string name="main_about_upload_log">Debug Log</string>
 
     <string name="main_about_me_about">About</string>
     <string name="about_logo">环信 IM</string>

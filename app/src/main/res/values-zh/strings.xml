@@ -152,6 +152,7 @@
     <string name="main_about_me_registration_number">备案号</string>
     <string name="main_about_me_registration_number_content">京ICP备2023000793号-10A</string>
 
+    <string name="main_about_upload_log">调试日志</string>
     <string name="main_about_me_about">关于</string>
     <string name="about_logo">环信 IM</string>
     <string name="about_version">SDK Version %1$s</string>
