@@ -4,13 +4,17 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.hyphenate.chat.EMClient
+import com.hyphenate.chatdemo.BuildConfig
 import com.hyphenate.chatdemo.DemoApplication
 import com.hyphenate.chatdemo.DemoHelper
 import com.hyphenate.chatdemo.R
@@ -37,7 +41,11 @@ import com.hyphenate.easeui.configs.setStatusStyle
 import com.hyphenate.easeui.feature.contact.ChatUIKitBlockListActivity
 import com.hyphenate.easeui.model.ChatUIKitEvent
 import com.hyphenate.easeui.widget.ChatUIKitCustomAvatarView
+import com.hyphenate.util.EMLog
 import kotlinx.coroutines.launch
+import java.io.File
+import kotlin.math.log
+
 
 class AboutMeFragment: ChatUIKitBaseFragment<DemoFragmentAboutMeBinding>(), View.OnClickListener,
     ChatUIKitCustomAvatarView.OnPresenceClickListener, IPresenceResultView {
@@ -84,6 +92,7 @@ class AboutMeFragment: ChatUIKitBaseFragment<DemoFragmentAboutMeBinding>(), View
             itemCurrency.setOnClickListener(this@AboutMeFragment)
             itemNotify.setOnClickListener(this@AboutMeFragment)
             itemPrivacy.setOnClickListener(this@AboutMeFragment)
+            itemUploadlog.setOnClickListener(this@AboutMeFragment)
             itemAbout.setOnClickListener(this@AboutMeFragment)
             aboutMeLogout.setOnClickListener(this@AboutMeFragment)
             aboutMeAccountCancellation.setOnClickListener(this@AboutMeFragment)
@@ -202,6 +211,45 @@ class AboutMeFragment: ChatUIKitBaseFragment<DemoFragmentAboutMeBinding>(), View
 
     }
 
+    private fun shareFile(fileUri: Uri?) {
+        if (fileUri != null) {
+            val shareIntent = Intent(Intent.ACTION_SEND)
+            shareIntent.setType("text/plain") // Change as per file type
+            shareIntent.putExtra(Intent.EXTRA_STREAM, fileUri)
+            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            EMLog.d("share:", shareIntent.toString())
+            // Start the share Intent
+            startActivity(Intent.createChooser(shareIntent, "Share file via"))
+        }
+    }
+
+    private fun getLogFile():Uri? {
+        var fileUri: Uri
+        // May null if storage is not currently available.
+        // Can use Environment.getExternalStorageState() to check.
+        val extDir = mContext.getExternalFilesDir(null)
+        val appkey = EMClient.getInstance().options.appKey
+        if (extDir != null) {
+            val logPath = extDir.getAbsolutePath()
+            val pos = logPath.indexOf("/files");
+            var basePath = logPath
+            if (pos == -1) {
+                basePath = logPath;
+            } else {
+                basePath = logPath.substring(0, pos);
+            }
+            val logFilePath = basePath + "/" + appkey + "/core_log/easemob.log";
+            EMLog.d("share:", logFilePath)
+            val file: File = File(logFilePath)
+            return FileProvider.getUriForFile(
+                mContext,
+                BuildConfig.APPLICATION_ID + ".fileProvider",
+                file
+            )
+        }
+        return null
+    }
+
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.item_presence -> {
@@ -220,6 +268,9 @@ class AboutMeFragment: ChatUIKitBaseFragment<DemoFragmentAboutMeBinding>(), View
             }
             R.id.item_privacy -> {
                 startActivity(Intent(mContext, ChatUIKitBlockListActivity::class.java))
+            }
+            R.id.item_uploadlog-> {
+                    shareFile(getLogFile())
             }
             R.id.item_about -> {
                 var clazz:Class<*>?
