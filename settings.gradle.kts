@@ -21,7 +21,7 @@ dependencyResolutionManagement {
     }
 }
 
-//rootProject.name = "easemob-demo-android"
+rootProject.name = "easemob-demo-android"
 include(":app")
 
 //include(":ease-im-kit")
